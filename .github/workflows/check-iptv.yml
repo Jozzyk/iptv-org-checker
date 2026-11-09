@@ -1,0 +1,51 @@
+name: Check IPTV and publish M3U
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 1 * * *"
+      timezone: "America/New_York"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: iptv-pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+      - name: Build checked playlist
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPOSITORY: ${{ github.event.repository.name }}
+        run: |
+          python3 check_playlist.py --previous-status "https://${OWNER,,}.github.io/$REPOSITORY/status.json"
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  publish:
+    needs: check
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
