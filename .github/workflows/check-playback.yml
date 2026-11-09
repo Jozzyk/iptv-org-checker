@@ -2,6 +2,11 @@ name: Check IPTV playback stalls
 
 on:
   workflow_dispatch:
+    inputs:
+      red_only:
+        description: Test .red HD and its alternate sources for 90 seconds
+        type: boolean
+        default: false
 
 permissions: {}
 
@@ -12,13 +17,18 @@ jobs:
     steps:
       - name: Install FFmpeg if needed
         run: command -v ffmpeg || (sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg)
-      - name: Sample Russian-language 1080p streams directly
+      - name: Measure video delivery directly
+        env:
+          RED_ONLY: ${{ inputs.red_only }}
         run: |
           curl -fsSL --retry 2 --max-time 30 https://jozzyk.github.io/iptv-org-checker/playlist-by-language.m3u -o playlist.m3u
           python3 -u - <<'PY'
           from concurrent.futures import ThreadPoolExecutor
           from pathlib import Path
+          import json
+          import os
           import subprocess
+          from urllib.request import urlopen
           from threading import Timer
           from time import monotonic
 
@@ -40,6 +50,22 @@ jobs:
                   entries[title] = (line, flags)
                   title = None
 
+          duration = 35
+          if os.environ.get('RED_ONLY') == 'true':
+              duration = 90
+              names = ('.red HD',)
+              with urlopen('https://iptv-org.github.io/api/streams.json', timeout=20) as source:
+                  variants = json.load(source)
+              alternatives = [item for item in variants if item.get('channel') == 'red.ru' and item.get('quality') == '576p']
+              for number, item in enumerate(alternatives, 1):
+                  name = f'.red 576p (source {number})'
+                  flags = []
+                  for key, flag in (('user_agent', '-user_agent'), ('referrer', '-referer')):
+                      if item.get(key):
+                          flags.extend((flag, item[key]))
+                  entries[name] = (item['url'], flags)
+                  names += (name,)
+
           def probe(name):
               if name not in entries:
                   return (name, 'NOT_FOUND', '-', '-', '-')
@@ -50,10 +76,10 @@ jobs:
                    '-stats_period', '0.5', '-progress', 'pipe:1', '-readrate', '1',
                    '-protocol_whitelist', 'http,https,tls,tcp,udp,crypto,rtmp,rtmps,mmsh,srt',
                    '-rw_timeout', '10000000', *flags, '-i', url,
-                   '-map', '0:v:0', '-c', 'copy', '-t', '35', '-f', 'null', '-'],
+                   '-map', '0:v:0', '-c', 'copy', '-t', str(duration), '-f', 'null', '-'],
                   stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
               ) as proc:
-                  timer = Timer(58, proc.kill)
+                  timer = Timer(duration + 25, proc.kill)
                   timer.start()
                   first = last = None
                   media_us = pauses = 0
@@ -79,7 +105,7 @@ jobs:
                       timer.cancel()
               if first is None:
                   return (name, 'NO_VIDEO', '-', '-', '-')
-              if code or media_us < 33_000_000:
+              if code or media_us < (duration - 2) * 1_000_000:
                   result = 'INCOMPLETE'
               else:
                   result = 'STALLED' if pauses else 'NO_LONG_STALL'
