@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       alternate_lists:
-        description: Compare sample streams from alternate public playlists
+        description: Verify public directory candidates for sharing in the US
         type: boolean
         default: false
       red_only:
@@ -30,6 +30,7 @@ jobs:
           python3 -u - <<'PY'
           from concurrent.futures import ThreadPoolExecutor
           from pathlib import Path
+          import hashlib
           import json
           import os
           import subprocess
@@ -117,14 +118,20 @@ jobs:
               return (name, result, f'{first-started:.1f}', f'{largest:.1f}', f'{media_us/1e6:.1f}')
 
           if os.environ.get('ALTERNATE_LISTS') == 'true':
-              duration = 25
+              duration = 35
               entries = {}
               names = ()
               sources = (
-                  ('ngrch', 'https://ngrch.github.io/iptv/ru.m3u', ('.Red', '.Red (2)', 'Первый (2)', 'Россия 1 (2)')),
-                  ('Doubo', 'https://cdn.jsdelivr.net/gh/streamline-iptv/iptv-playlists@dist/languages/rus.m3u', ('RTVi US (1080p)', 'Настоящее Время (1080p)')),
-                  ('DuckKota UA', 'https://DuckKota.github.io/iptv/playlists/country/ua.m3u', ('1+1 International (720p)', 'ICTV (1080p)', 'Suspilne. Kultura (1080p)')),
-                  ('DuckKota BY', 'https://DuckKota.github.io/iptv/playlists/country/by.m3u', ('Belarus-1 (1080p)', 'Belarus-24 (1080p)', 'STV (720p)')),
+                  ('Doubo RU', 'https://cdn.jsdelivr.net/gh/streamline-iptv/iptv-playlists@dist/languages/rus.m3u', (
+                      'RTVi US (1080p)', 'Настоящее Время (1080p)', 'DW Russian (1080p)',
+                      'Euronews Russian (720p)', 'ETV+ (720p)', 'РБК-ТВ', 'NTV HD (1080p)',
+                      'Russia-K HD (1080p)', 'Moldova 1 (1080p)', 'Moy mir (720p)',
+                      'Три Ангела (720p)', 'Silk Way (1080p)', 'Istoki (1080p)',
+                  )),
+                  ('Doubo UA', 'https://cdn.jsdelivr.net/gh/streamline-iptv/iptv-playlists@dist/countries/ua.m3u', (
+                      'EWTN Ukraine (1080p)', 'IRT (720p)', 'Pervyy gorodskoy Odessa',
+                      'Telekanal RAI (480p)', 'Ланет.TV (486p)',
+                  )),
               )
               for provider, url, sample in sources:
                   names += tuple(f'{provider}: {title}' for title in sample)
@@ -156,5 +163,7 @@ jobs:
           print('CHANNEL | RESULT | START_SECONDS | LONGEST_GAP_SECONDS | VIDEO_SECONDS')
           with ThreadPoolExecutor(max_workers=6) as executor:
               for row in executor.map(probe, names):
-                  print(' | '.join(row), flush=True)
+                  url = entries.get(row[0], ('', []))[0]
+                  digest = hashlib.sha256(url.encode()).hexdigest()[:12]
+                  print(' | '.join((*row, digest)), flush=True)
           PY
