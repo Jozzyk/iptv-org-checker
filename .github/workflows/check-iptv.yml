@@ -2,6 +2,11 @@ name: Check IPTV and publish M3U
 
 on:
   workflow_dispatch:
+    inputs:
+      reuse_published:
+        description: Build language groups from the last checked playlist
+        type: boolean
+        default: false
   schedule:
     - cron: "17 1 * * *"
       timezone: "America/New_York"
@@ -22,15 +27,30 @@ jobs:
         with:
           persist-credentials: false
       - name: Install FFmpeg
+        if: github.event_name != 'workflow_dispatch' || !inputs.reuse_published
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends ffmpeg
       - name: Build checked playlist
+        if: github.event_name != 'workflow_dispatch' || !inputs.reuse_published
         env:
           OWNER: ${{ github.repository_owner }}
           REPOSITORY: ${{ github.event.repository.name }}
         run: |
           python3 check_playlist.py --previous-status "https://${OWNER,,}.github.io/$REPOSITORY/status.json"
+      - name: Reuse the published playlist
+        if: github.event_name == 'workflow_dispatch' && inputs.reuse_published
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPOSITORY: ${{ github.event.repository.name }}
+        run: |
+          mkdir -p site
+          base="https://${OWNER,,}.github.io/$REPOSITORY"
+          curl -fsSL --retry 2 --max-time 30 "$base/playlist.m3u" -o site/playlist.m3u
+          curl -fsSL --retry 2 --max-time 30 "$base/status.json" -o site/status.json
+          python3 -c 'import json; assert json.load(open("site/status.json"))["published_channels"] == sum(line.startswith("#EXTINF:") for line in open("site/playlist.m3u"))'
+      - name: Group checked channels by language
+        run: node group_by_language.mjs
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site
