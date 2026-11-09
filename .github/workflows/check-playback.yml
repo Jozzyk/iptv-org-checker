@@ -1,0 +1,92 @@
+name: Check IPTV playback stalls
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Install FFmpeg if needed
+        run: command -v ffmpeg || (sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg)
+      - name: Sample Russian-language 1080p streams directly
+        run: |
+          curl -fsSL --retry 2 --max-time 30 https://jozzyk.github.io/iptv-org-checker/playlist-by-language.m3u -o playlist.m3u
+          python3 -u - <<'PY'
+          from concurrent.futures import ThreadPoolExecutor
+          from pathlib import Path
+          import subprocess
+          from threading import Timer
+          from time import monotonic
+
+          names = ('360°', 'Amedia Hit', 'Animal Planet (Russia)', 'Discovery Channel (Russia)',
+                   'Dom kino Premium HD', 'Match! Ultra', 'Mir 24', 'Russia-1 HD',
+                   'STS HD', 'TV-3 HD', 'TLC (Russia)', 'RTVi US')
+          entries = {}
+          options = {'http-user-agent': '-user_agent', 'http-referrer': '-referer', 'http-referer': '-referer'}
+          title = None
+          for line in Path('playlist.m3u').read_text(encoding='utf-8').splitlines():
+              if line.startswith('#EXTINF:'):
+                  title = line.rsplit(',', 1)[-1].removesuffix(' (1080p)') if 'group-title="Русский"' in line and line.endswith(' (1080p)') else None
+                  flags = []
+              elif title and line.startswith('#EXTVLCOPT:'):
+                  key, _, value = line.removeprefix('#EXTVLCOPT:').partition('=')
+                  if key in options and value:
+                      flags.extend((options[key], value))
+              elif title and line and not line.startswith('#'):
+                  entries[title] = (line, flags)
+                  title = None
+
+          def probe(name):
+              if name not in entries:
+                  return (name, 'NOT_FOUND', '-', '-', '-')
+              url, flags = entries[name]
+              started = monotonic()
+              with subprocess.Popen(
+                  ['ffmpeg', '-nostdin', '-hide_banner', '-loglevel', 'error',
+                   '-stats_period', '0.5', '-progress', 'pipe:1', '-readrate', '1',
+                   '-protocol_whitelist', 'http,https,tls,tcp,udp,crypto,rtmp,rtmps,mmsh,srt',
+                   '-rw_timeout', '10000000', *flags, '-i', url,
+                   '-map', '0:v:0', '-c', 'copy', '-t', '35', '-f', 'null', '-'],
+                  stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
+              ) as proc:
+                  timer = Timer(58, proc.kill)
+                  timer.start()
+                  first = last = None
+                  media_us = pauses = 0
+                  largest = 0.0
+                  try:
+                      for line in proc.stdout:
+                          key, _, value = line.strip().partition('=')
+                          if key != 'out_time_us' or value == 'N/A':
+                              continue
+                          stamp = int(value)
+                          if stamp <= media_us:
+                              continue
+                          now = monotonic()
+                          if last is not None:
+                              gap = now - last
+                              largest = max(largest, gap)
+                              pauses += gap >= 5
+                          else:
+                              first = now
+                          media_us, last = stamp, now
+                      code = proc.wait()
+                  finally:
+                      timer.cancel()
+              if first is None:
+                  return (name, 'NO_VIDEO', '-', '-', '-')
+              if code or media_us < 33_000_000:
+                  result = 'INCOMPLETE'
+              else:
+                  result = 'STALLED' if pauses else 'NO_LONG_STALL'
+              return (name, result, f'{first-started:.1f}', f'{largest:.1f}', f'{media_us/1e6:.1f}')
+
+          print('CHANNEL | RESULT | START_SECONDS | LONGEST_GAP_SECONDS | VIDEO_SECONDS')
+          with ThreadPoolExecutor(max_workers=6) as executor:
+              for row in executor.map(probe, names):
+                  print(' | '.join(row), flush=True)
+          PY
