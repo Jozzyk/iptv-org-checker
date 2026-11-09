@@ -3,6 +3,10 @@ name: Check IPTV playback stalls
 on:
   workflow_dispatch:
     inputs:
+      alternate_lists:
+        description: Compare sample streams from alternate public playlists
+        type: boolean
+        default: false
       red_only:
         description: Test .red HD and its alternate sources for 90 seconds
         type: boolean
@@ -19,6 +23,7 @@ jobs:
         run: command -v ffmpeg || (sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg)
       - name: Measure video delivery directly
         env:
+          ALTERNATE_LISTS: ${{ inputs.alternate_lists }}
           RED_ONLY: ${{ inputs.red_only }}
         run: |
           curl -fsSL --retry 2 --max-time 30 https://jozzyk.github.io/iptv-org-checker/playlist-by-language.m3u -o playlist.m3u
@@ -110,6 +115,43 @@ jobs:
               else:
                   result = 'STALLED' if pauses else 'NO_LONG_STALL'
               return (name, result, f'{first-started:.1f}', f'{largest:.1f}', f'{media_us/1e6:.1f}')
+
+          if os.environ.get('ALTERNATE_LISTS') == 'true':
+              duration = 25
+              entries = {}
+              names = ()
+              sources = (
+                  ('ngrch', 'https://ngrch.github.io/iptv/ru.m3u', ('.Red', '.Red (2)', 'Первый (2)', 'Россия 1 (2)')),
+                  ('Doubo', 'https://cdn.jsdelivr.net/gh/streamline-iptv/iptv-playlists@dist/languages/rus.m3u', ('RTVi US (1080p)', 'Настоящее Время (1080p)')),
+                  ('DuckKota UA', 'https://DuckKota.github.io/iptv/playlists/country/ua.m3u', ('1+1 International (720p)', 'ICTV (1080p)', 'Suspilne. Kultura (1080p)')),
+                  ('DuckKota BY', 'https://DuckKota.github.io/iptv/playlists/country/by.m3u', ('Belarus-1 (1080p)', 'Belarus-24 (1080p)', 'STV (720p)')),
+              )
+              for provider, url, sample in sources:
+                  names += tuple(f'{provider}: {title}' for title in sample)
+                  title = None
+                  try:
+                      with urlopen(url, timeout=15) as source:
+                          playlist = source.read().decode('utf-8-sig')
+                  except OSError as error:
+                      print(f'{provider}: {error}', flush=True)
+                      continue
+                  for line in playlist.splitlines():
+                      if line.startswith('#EXTINF:'):
+                          title = line.rsplit(',', 1)[-1].strip()
+                          flags = []
+                      elif title in sample and line.startswith('#EXTVLCOPT:'):
+                          key, _, value = line.removeprefix('#EXTVLCOPT:').partition('=')
+                          if key in options and value:
+                              flags.extend((options[key], value))
+                      elif title in sample and line.startswith(('http://', 'https://')):
+                          entries[f'{provider}: {title}'] = (line, flags)
+                          title = None
+              try:
+                  with urlopen('https://www.cloudflare.com/cdn-cgi/trace', timeout=8) as trace:
+                      location = next(line for line in trace.read().decode().splitlines() if line.startswith('loc='))
+                  print('Runner egress country:', location.removeprefix('loc='))
+              except (OSError, StopIteration):
+                  print('Runner egress country: unavailable')
 
           print('CHANNEL | RESULT | START_SECONDS | LONGEST_GAP_SECONDS | VIDEO_SECONDS')
           with ThreadPoolExecutor(max_workers=6) as executor:
