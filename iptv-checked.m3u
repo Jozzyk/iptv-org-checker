@@ -1,4 +1,5 @@
 #EXTM3U
+# Exclude teleshopping / shopping channels from future additions.
 # Checked 2026-11-19: ffprobe detected video. US residential availability and redistribution rights not verified.
 # Source: https://iptv-org.github.io/iptv/languages/rus.m3u
 # Checked: 2026-11-19; video stream detected
@@ -176,8 +177,6 @@ https://fs.uplink.kz/lapki_live/mono.m3u8?token=onlinetv
 #EXTINF:-1 tvg-id="LoveNature.ca@HD" tvg-logo="https://tv.lovenature.com/wp-content/uploads/2024/10/LoveNature2024_Logo_full_colour-copy.png" group-title="Outdoor",Love Nature HD (1080p)
 https://mumbai-edge.smartplaytv.in/LoveNature/index.m3u8
 # Checked: 2026-11-19; video stream detected
-#EXTINF:-1 tvg-id="Magnat.ru@SD" tvg-logo="https://i.imgur.com/r485aZL.png" group-title="Shop",Magnat (1080p)
-https://s1.tv-nano.com/Magnat_HD_5119705/video.m3u8
 # Checked: 2026-11-19; video stream detected
 #EXTINF:-1 tvg-id="MakonTV.uz@SD" tvg-logo="https://i.imgur.com/vCc0ED1.png" group-title="Entertainment",Makon TV (576i)
 https://stream8.cinerama.uz/1497/tracks-v1a1/mono.m3u8
@@ -188,8 +187,6 @@ https://fs.uplink.kz/mirovoe_kino/mono.m3u8?token=onlinetv
 #EXTINF:-1 tvg-id="MoskvaDoveriye.ru@SD" tvg-logo="https://i.imgur.com/QDqDQzt.png" group-title="General",Moskva. Doveriye (576p)
 https://stream.smotrim.ru/hls2/doverie/playlist_3.m3u8
 # Checked: 2026-11-19; video stream detected
-#EXTINF:-1 tvg-id="Moymir.ru@SD" tvg-logo="https://www.cableman.ru/sites/default/files/MM-TV_logo-1%5B1509%5D.png" group-title="Shop",Moy mir (720p)
-https://moymir.ru/hls/onair.m3u8
 # Checked: 2026-11-19; video stream detected
 #EXTINF:-1 tvg-id="Mult.ru@International" tvg-logo="https://i.imgur.com/xi351Fx.png" group-title="Kids",Mult International (576p)
 https://fs.uplink.kz/mult/mono.m3u8?token=onlinetv
