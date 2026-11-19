@@ -355,3 +355,186 @@ https://fs.uplink.kz/sport+/mono.m3u8?token=onlinetv
 # Checked: 2026-11-19; video stream detected
 #EXTINF:-1 tvg-id="TuranTV.kz@SD" tvg-logo="https://i.imgur.com/VagTPMo.png" group-title="Undefined",Turan TV (576p)
 https://fs.uplink.kz/turan_tv/mono.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Общие" audio-track="rus", ТНВ Татарстан
+http://user91229.clients-cdnnow.ru/hls/user91229_1_720/index.m3u8
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Start Air
+https://fs.uplink.kz/start_air/mono.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", viju TV1000 action
+http://fs.uplink.kz/viju_tv1000_action/tracks-v1a1/mono.ts.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", viju TV1000 русское
+http://195.64.140.147:10069/69
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", viju+ Megahit
+http://185.46.16.239:8000/VIP_Megahit
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", viju+ Premiere
+http://185.46.16.239:8000/VIP_Premiere
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" tvg-id="domkino" audio-track="rus", Дом кино
+https://fs.uplink.kz/dom_kino/mono.m3u8?token=onlinetv2
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" tvg-id="domkino-premium" audio-track="rus", Дом кино Премиум
+http://fs.uplink.kz/dom_kino_premium/tracks-v1a1/mono.ts.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" tvg-id="illuzion-plus" audio-track="rus", Иллюзион+
+http://195.64.140.147:10090/90
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" tvg-id="kinoxit" audio-track="rus", Кинохит HD
+http://195.64.140.147:10046/46
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" tvg-id="russkaya-komedia" audio-track="rus", Комедия
+http://176.118.197.101/Komediya/mono.m3u8
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Любимое кино
+http://195.64.140.147:10091/91
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", НТВ-Хит HD
+http://195.64.140.147:10074/74
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Ретро
+http://176.118.197.101/Retro/mono.m3u8
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Русский бестселлер
+http://195.64.140.147:10075/75
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Русский иллюзион
+http://185.46.16.239:8000/Russkiy_Illyuzion
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Сапфир
+http://195.64.140.147:10056/56
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино", Сити Эдем — КиноМистика
+https://cityeden.catcast.tv/content/40783/index.m3u8?password=loganet
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино", Сити Эдем — КиноЭкшен
+https://cityeden.catcast.tv/content/41333/index.m3u8?password=loganet
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино", Сити Эдем — ТелеНовелла
+https://cityeden.catcast.tv/content/46209/index.m3u8?password=loganet
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", DetectiveJam HD
+http://88.218.242.237:8001/DetectiveJam_HD
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Romance
+http://91.205.196.7:8000/play/a03j
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Кино" audio-track="rus", Scream HD
+http://88.218.242.237:8001/Scream_HD
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Детям" audio-track="rus", Ani
+http://185.46.16.239:8000/Ani
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Детям" audio-track="rus", Cartoon Classics
+http://88.218.242.237:8001/Cartoon_Classics
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Детям" audio-track="rus", Da Vinci
+http://fs.uplink.kz/da_vinci/tracks-v1a1/mono.ts.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Детям" audio-track="rus", О!
+http://195.64.140.147:10124/124
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" audio-track="rus", RTG
+http://178.124.153.123:44400/rtg
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" audio-track="rus", Сарафан
+https://fs.uplink.kz/sarafan/mono.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" tvg-id="super" catchup="append" catchup-days="7" catchup-source="?offset=-${offset}&utcstart=${timestamp}", Суббота! (Архив)
+https://zabava-htlive.cdn.ngenix.net/hls/CH_SUPER/variant.m3u8
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" tvg-id="super-pl7" catchup="append" catchup-days="7" catchup-source="?offset=-${offset}&utcstart=${timestamp}", Суббота! +7 (Архив)
+https://zabava-htlive.cdn.ngenix.net/hls/CH_SUPER_7/variant.m3u8
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" audio-track="rus", Т24
+https://fs.uplink.kz/tehno_24/mono.m3u8?token=onlinetv2
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" audio-track="rus", ТНТ
+http://185.46.16.239:8000/TNT
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" audio-track="rus", ТНТ4
+https://fs.uplink.kz/tnt4/mono.m3u8?token=onlinetv2
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" audio-track="rus", Точка ТВ
+http://195.64.140.147:10024/24
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Развлечение" audio-track="rus", Travel Channel HD
+http://195.64.140.147:10158/158
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Знания" audio-track="rus", Animal Planet
+http://195.64.140.147:10032/32
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Знания" audio-track="rus", National Geographic
+https://fs.uplink.kz/nat_geo/mono.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Знания" audio-track="rus", Terra
+http://195.64.140.147:10150/150
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Знания" audio-track="rus", The Explorers HD
+http://88.218.242.237:8001/The_Explorers_HD
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Знания" audio-track="rus", Моя планета HD
+http://185.46.16.239:8000/Planeta_HD
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Знания" audio-track="rus", Наука
+http://195.64.140.147:10176/176
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Знания" audio-track="rus", Победа
+http://fs.uplink.kz/pobeda/tracks-v1a1/mono.ts.m3u8?token=onlinetv
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Новости" audio-track="rus", Соловьев Live
+https://stream.smotrim.ru/hls2/solovievlive/playlist_3.m3u8
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Хобби" tvg-id="dialogi-o-rybalke" audio-track="rus", Диалоги о рыбалке
+http://195.64.140.147:10117/117
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Хобби" tvg-id="zhivi" audio-track="rus", Живи!
+http://195.64.140.147:10178/178
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Хобби" tvg-id="zagorodnaya-zhizn" audio-track="rus", Загородная жизнь
+http://185.57.68.33/40/mpegts
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Хобби" audio-track="rus", Оружие
+http://194.158.222.36:6093/
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Хобби" audio-track="rus", Тонус
+http://194.143.148.28:8080/Mir24/mpegts
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Хобби" tvg-id="dikiy" audio-track="rus", Дикий
+http://195.64.140.147:10139/139
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Хобби" tvg-id="eda" audio-track="rus", Еда
+http://88.218.242.237:8001/eda
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Религия", Сити Эдем Плей
+https://cityeden.catcast.tv/content/34100/index.m3u8?password=loganet
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Религия" audio-track="rus", Союз
+http://185.46.16.239:8000/Soyuz
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Спорт" audio-track="rus", KHL Prime HD
+http://195.64.140.147:10109/109
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Спорт" tvg-id="box-tv" audio-track="rus", Бокс ТВ
+http://185.46.16.239:8000/Eurosport_1
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Спорт" audio-track="rus", Матч! Боец HD
+http://91.205.196.7:8000/play/a02s
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Спорт" audio-track="rus", Матч! Страна
+http://185.46.16.239:8000/Match_Nash_Sport
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Спорт" audio-track="rus", Матч! Футбол 1 HD
+http://195.64.140.147:10100/100
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Спорт" audio-track="rus", Матч! Футбол 2 HD
+http://195.64.140.147:10101/101
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Спорт" audio-track="rus", Старт Триумф HD
+http://88.218.242.237:8001/Start_Triumf_HD
+# Source: https://loganettv.github.io/playlists/all.m3u; checked 2026-11-19: video detected
+#EXTINF:-1 group-title="Музыка" audio-track="rus", Bridge Русский хит
+http://195.64.140.147:10194/194
